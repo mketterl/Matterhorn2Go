@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+The Matterhorn2Go Project
+Copyright (C) 2011  University of Osnabrück; Part of the Opencast Matterhorn Project
+
+This project is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 
+USA 
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:views="views.*"
+		xmlns:events="events.*"
+		title="Matterhorn"  
+		xmlns:business="business.*" 
+		backKeyPressed="keyPressedHandler(event)"
+		creationComplete="init()">
+	
+	<fx:Script>
+		<![CDATA[
+			import business.Paging;
+			import business.SeekPosition;
+			import business.core.ButtonSize;
+			import business.datahandler.AdoptersDataHandler;
+			import business.datahandler.DataHandler;
+			
+			import events.BusyIndicatorEvent;
+			import events.VideosLoadedEvent;
+			
+			import flash.events.Event;
+			
+			import mx.collections.XMLListCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			
+			import business.datahandler.URLClass;
+		
+			[Bindable]
+			public var videos:XMLListCollection;
+			private var xmlData:DataHandler;
+			private var paging:Paging;
+			private var text_result:String = "Results: ";
+			
+			[Bindable]
+			private var search_result:String;
+			
+			[Bindable]
+			private var footer_text:String;
+			
+			private var adoptersInit:AdoptersDataHandler = AdoptersDataHandler.getInstance();
+			
+			public function init():void
+			{		
+				xmlData = DataHandler.getInstance();
+				
+				videos = xmlData.getXMLListCollection();
+				
+				panel.setStyle("chromeColor", "white");
+				
+				if(videos.length == 0 || xmlData.getURL() != URLClass.getInstance().getURL())
+				{
+					adoptersInit.initGetFilter();
+				
+					bi.visible = true;
+					loading.visible = true;
+					xmlData.init();
+				}
+				else
+				{
+					bi.visible = false;
+					loading.visible = false;
+					panel.title = text_result + xmlData.getTotal() as String;
+				}
+				
+				xmlData.getTotal();
+				
+				xmlData.addEventListener(VideosLoadedEvent.VIDEOSLOADED, getXMLListCollection);
+				
+				textinput_search.addEventListener(FlexEvent.ENTER, getVideo);
+				
+				this.addEventListener(BusyIndicatorEvent.INDICATORLOADED, loadIndicator);
+			}
+			
+			public function loadIndicator(event:BusyIndicatorEvent):void
+			{
+				bi.visible = true;
+				loading.visible = true;
+			}
+			
+			public function getXMLListCollection(event:VideosLoadedEvent):void
+			{	
+				//add_button.visible = false;
+				
+				videos = xmlData.getXMLListCollection();
+
+				paging = Paging.getInstance();
+				
+				textinput_search.text  = xmlData.getText();
+				
+				panel.title = text_result + xmlData.getTotal() as String;
+				
+				footer_text = paging.getFooter();
+				
+			//	if(paging.getPage() == paging.getMaxPages())
+				//	add_button.visible = false;
+				if(bi.visible == true)
+				{
+					bi.visible = false;
+					loading.visible = false;
+					
+				//	if(paging.getPage() != paging.getMaxPages())
+				//		add_button.visible = true;
+				}
+
+				//xmlData.removeEventListener(VideosLoadedEvent.VIDEOSLOADED, getXMLListCollection);
+			}
+			
+			public function getVideo(event:FlexEvent):void
+			{
+			//	add_button.visible = false;
+				bi.visible = true;
+				loading.visible = true;
+				xmlData.setOValue();
+				xmlData.setNewSearch();
+				xmlData.search(textinput_search.text, String(0));
+				xmlData.addEventListener(VideosLoadedEvent.VIDEOSLOADED, getXMLListCollection);
+			}
+			
+			public function loadNewView():void
+			{
+				this.removeEventListener(BusyIndicatorEvent.INDICATORLOADED, loadIndicator);
+
+				SeekPosition.getInstance().setPosition(0);
+				navigator.pushView(VideoDetailsView, list.selectedItem);
+			}
+		
+			public function applicationExit():void 
+			{	
+				this.removeEventListener(BusyIndicatorEvent.INDICATORLOADED, loadIndicator);
+
+				var exitingEvent:Event = new Event(Event.EXITING, false, true);
+				NativeApplication.nativeApplication.dispatchEvent(exitingEvent);
+				if (!exitingEvent.isDefaultPrevented()) {
+					NativeApplication.nativeApplication.exit();
+				}
+			}
+			
+			public function showInfo():void 
+			{
+				this.removeEventListener(BusyIndicatorEvent.INDICATORLOADED, loadIndicator);
+
+				navigator.pushView(InfoView, data);
+			}
+			
+			public function showConfig():void 
+			{
+				this.removeEventListener(BusyIndicatorEvent.INDICATORLOADED, loadIndicator);
+
+				navigator.pushView(AdoptersView, data);
+			}
+			
+			public function backPage():void
+			{
+				if(videos == null)
+				{
+					panel.title = "URL error";
+				}
+				else
+				{
+					bi.visible = !bi.visible;
+					paging.backPage(textinput_search.text);
+				}
+			}
+			
+			public function nextPage():void
+			{	
+				//add_button.visible = false;
+
+				if(videos == null)
+				{
+					panel.title = "URL error";
+				}
+				else
+				{
+					bi.visible = true;
+					paging.nextPage(textinput_search.text);
+				}		
+	
+				xmlData.addEventListener(VideosLoadedEvent.VIDEOSLOADED, getXMLListCollection);
+			}
+			
+			public function loadMenu():void
+			{
+				mx.core.FlexGlobals.topLevelApplication.viewMenuOpen = true;
+			}
+			
+			protected function keyPressedHandler(event:FlexEvent):void
+			{
+				applicationExit();
+			}
+			
+		]]>
+	</fx:Script>
+			
+	<s:actionContent>
+		<s:Button id="btn_search" click="getVideo(null)">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="assets/search48.png"
+										source240dpi="assets/search72.png"
+										source320dpi="assets/search96.png"/>
+			</s:icon>
+		</s:Button>
+	</s:actionContent>
+	
+	<s:titleContent>
+		<s:TextInput id="textinput_search" x="13" 
+					 width="{navigator.width - 160}" 
+					 enabled="true" text=""/>
+	</s:titleContent>
+	
+	<s:navigationContent>
+		<s:Button id="menu_button" click="loadMenu()">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="assets/kopfhoerer48x48.png"
+										source240dpi="assets/kopfhoerer72x72.png"
+										source320dpi="assets/kopfhoerer96x96.png"/>
+			</s:icon>
+		</s:Button>
+	</s:navigationContent>	
+	
+	<s:Panel id="panel" width="100%" height="100%">
+		
+		<s:List id="list" width="100%" height="100%"
+				dataProvider="{videos}"
+				itemRenderer="business.renderers.VideosItemRenderer"
+				change="loadNewView()"/>
+		
+		<s:BusyIndicator id="bi" width="40" height="40" 
+						 visible="true"
+						 x="{navigator.width / 2 - 25}" 
+						 y ="60"
+						 symbolColor="red"/>
+		
+		<s:Label id="loading" color="red" 
+				 visible="true" 
+				 text="... loading" 
+				 alpha="0.6" 
+				 y="120" x="{navigator.width / 2 - 40}"/>
+
+		<!--
+		<s:controlBarContent>
+			<s:Group>
+				<business:ImageButton id="b_button" visible="false" 
+									  click="backPage();"
+									  buttonMode="true"   
+									  skinClass="views.skins.BButtonSkin"
+									  x = "10" y = "0" />
+				
+				<business:ImageButton id="add_button"
+									  click="nextPage();"
+									  buttonMode="true"   
+									  skinClass="views.skins.ButtonAddSkin"
+									  x = "{navigator.width / 2 - 37}" y = "0" />
+				
+				<s:BusyIndicator id="bi" width="40" height="40" 
+								 visible="true"
+								 x="{navigator.width / 2 - 35}" 
+								 y ="5"
+								 symbolColor="red"/>
+
+				<s:Label id="text" width="115" visible="false"
+						 x="{(navigator.width - 92) / 2 + 7}" y="20" text="{footer_text}"/>
+				
+				<business:ImageButton id="n_button" visible="false" 
+									  click="nextPage();"
+									  buttonMode="true"   
+									  skinClass="views.skins.NButtonSkin"
+									  x = "{navigator.width - 82}" 
+									  y = "0" />
+			</s:Group>	
+		</s:controlBarContent>
+		-->
+	</s:Panel>
+	
+	<s:viewMenuItems>		
+		<s:ViewMenuItem label="Config"
+						click="showConfig();"
+						iconPlacement="left">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="assets/settings48x48.png"
+										source240dpi="assets/settings72x72.png"
+										source320dpi="assets/settings96x96.png"/>
+			</s:icon>
+		</s:ViewMenuItem>
+		
+		<s:ViewMenuItem label="Info"  
+						click="showInfo();"
+						iconPlacement="left">
+			<s:icon>
+				<s:MultiDPIBitmapSource source160dpi="assets/infoicon_48x48.png"
+										source240dpi="assets/infoicon_72x72.png"
+										source320dpi="assets/infoicon_96x96.png"/>
+			</s:icon>
+		</s:ViewMenuItem>
+			
+		<!--
+		<s:ViewMenuItem label="close" click="applicationExit();"
+						icon="assets/exit48x48.png"
+						iconPlacement="left"/> -->
+	</s:viewMenuItems>
+</s:View>

@@ -1,0 +1,161 @@
+Icon License
+
+________________________________________________________
+
+BackIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/61507/128/arrow_left_redo_undo_icon 
+
+License: Free for commercial use (Do not redistribute)
+
+Date: 31.07.2011
+________________________________________________________
+
+########################################################
+MediaGroup
+
+"Within the Multimedia Icon Sets ZIP package you will find the 14 PNG icons sized at 256x256px, you will also find the original AI source files for each icon.
+You are free to use this icon set for both personal and commercial projects. Enjoy :)"
+
+http://speckyboy.specky.netdna-cdn.com/wp-content/uploads/2011/04/multimedia_iconset.zip
+
+________________________________________________________
+
+PlayIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/67776/128/_icon
+
+License: Free for commercial use
+
+Date: 12.09.2011
+
+________________________________________________________
+
+StopIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/67778/128/_icon
+
+License: Free for commercial use
+
+Date: 12.09.2011
+________________________________________________________
+
+PauseIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/67775/128/_icon
+
+License: Free for commercial use
+
+Date: 12.09.2011
+
+########################################################
+________________________________________________________
+CommentIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/15194/128/comment_write_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+SearchIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/8826/128/find_search_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+NextIcon / PreviousIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/41939/128/arrow_next_right_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+SegmentIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/35249/128/clock_time_wait_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+AddAnnoIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/46774/128/add_notes_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+
+########################################################
+________________________________________________________
+ExitIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/28363/128/door_exit_logout_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+########################################################
+________________________________________________________
+InfoIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/40800/128/black_info_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+addAnnoIcon
+
+Format: PNG
+
+Link: http://www.iconfinder.com/icondetails/46776/128/add_icon
+
+License: Free for commercial use
+
+Date: 21.09.2011
+
+########################################################
+________________________________________________________
+
+

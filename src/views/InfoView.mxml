@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+The Matterhorn2Go Project
+Copyright (C) 2011  University of Osnabrück; Part of the Opencast Matterhorn Project
+
+This project is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 
+USA 
+-->
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="Information" 
+		xmlns:views="views.*"
+		xmlns:business="business.*"
+		creationComplete="init()">
+	<fx:Declarations>
+
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			import mx.core.UIComponent;
+			import mx.events.ResizeEvent;
+			
+			[Bindable]
+			protected var height_num:Number = 0;
+			
+			[Bindable]
+			protected var width_num:Number = 0;
+			
+			[Bindable]
+			private var detail:TextField;
+			private var detailComp:UIComponent;
+			
+			private var fontFamily:String = "_sans";
+			
+			private var fontSize:Number = 14;
+			
+			// The initialisation function
+			protected function init():void
+			{	
+				//import flash.system.Capabilities;
+				
+				initText();
+				
+				detailComp = new UIComponent();
+				detailComp.addChild(detail);
+				
+				detailGroup.addElement(detailComp);
+				
+				//trace(Capabilities.manufacturer)
+				//trace(Capabilities.cpuArchitecture)
+				//trace(Capabilities.maxLevelIDC)
+				//trace(Capabilities.os)
+				
+				this.navigator.addEventListener(ResizeEvent.RESIZE, setSize);
+				
+				view.visible=true;	
+				
+				height_num = navigator.height - 70;
+				width_num = navigator.width - 10;
+			}
+			
+			public function initText():void
+			{
+				detail = new TextField();
+				detail.multiline = true;
+				detail.wordWrap = true;
+				detail.defaultTextFormat = new TextFormat(fontFamily, fontSize, null, null);
+				detail.autoSize = "left";
+				detail.width = this.navigator.width - 30;
+				
+				detail.text = "Copyright (C) 2011  University of Osnabrück, " +
+					"Part of the Opencast Matterhorn Project, " +
+					"GNU Lesser General Public License";
+			}
+			
+			public function setSize(event:ResizeEvent):void
+			{	
+				view.visible=true;
+				
+				detailComp.removeChild(detail);
+				
+				initText();
+				
+				detail.width = this.navigator.width - 30;
+				detailComp.addChild(detail);
+				detailGroup.addElement(detailComp);
+
+				height_num = this.navigator.height - 70;
+				width_num = this.navigator.width -10;
+			}
+
+			protected function popThisView():void
+			{
+				this.navigator.removeEventListener(ResizeEvent.RESIZE, setSize);
+				navigator.popView();
+				//navigator.pushView(MobileMatterhornHomeView, data);	
+			}
+		]]>
+	</fx:Script>
+
+	<s:actionContent>
+		<s:VGroup>
+			<s:Group width="60" height="60">
+				<business:ImageButton id="back_button"
+									  click="popThisView();"
+									  buttonMode="true"
+									  x="5" y="5"
+									  skinClass="views.skins.BackButtonSkin"/>
+			</s:Group>
+		</s:VGroup>
+	</s:actionContent>
+	
+	<s:VGroup id="view" paddingTop="0" paddingLeft="10" visible="false">
+		<s:Scroller width="{width_num}" height="{height_num}">
+			<s:Group>
+				<s:VGroup x="10" y="15">
+					<s:VGroup x="10" y="15">
+						<s:HGroup verticalAlign="middle">
+							<s:Image width="100" height="50" scaleMode="letterbox" smooth="true"
+									 smoothingQuality="default" source="assets/uniLogo.png"  x="10"/>
+						</s:HGroup>
+					</s:VGroup>
+					
+					<s:VGroup verticalAlign="bottom">
+						<s:Group >
+							<s:Label text="Markus Ketterl (mketterl@uos.de)"
+									  y="15"
+									  fontFamily="_sans"/>
+							<s:Label text="Rüdiger Rolf (rrolf@uos.de)"
+									 y="45"
+									 fontFamily="_sans"/>
+							<s:Label text="Leonid Oldenburger (loldenbu@uos.de)"
+									 y="75"
+									 fontFamily="_sans"/>
+							<s:Label text="Lucas Köhler (lkoehler@uos.de)"
+									 y="105"
+									 fontFamily="_sans"/>
+							<s:Label text="Philipp Bauer (phbauer@uos.de)"
+									 y="135"
+									 fontFamily="_sans"/>
+							<s:Label text="Karina Meyer (karimeye@uos.de)"
+									 y="165"
+									 fontFamily="_sans"/>
+
+							<s:Label text="License: " 
+									 fontWeight="bold" 
+									 fontFamily="_sans" 
+									 y="200"/>							
+							<s:Group id="detailGroup" 
+									 x="-3" y="215"/>
+							<s:Label y="240"/>	
+						</s:Group>
+					</s:VGroup>
+				</s:VGroup>
+			</s:Group>
+		</s:Scroller>
+	</s:VGroup> 
+</s:View>

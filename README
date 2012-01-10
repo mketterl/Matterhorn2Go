@@ -1,0 +1,51 @@
+<!--
+The Matterhorn2Go Project
+Copyright (C) 2011  University of Osnabrück; Part of the Opencast Matterhorn Project
+
+This project is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+USA
+-->
+
+
+Description:
+Lecture recordings everywhere!
+Opencast Matterhorn is an open-source lecture recording system used at several universities world wide. Matterhorn can capture the video of the lecturer, and the computer screen separately. This app can show both videos next to each other or lets the user select one of the videos.
+More information on Matterhorn can be found on http://opencast.org/matterhorn/
+This app allows to select the Matterhorn installations from of one of the registered institutions.
+The software uses Adobe AIR. If you have not installed it yet, you are requested to install it after you installed Matterhorn 2go.
+
+What's New:
+What's in this version:
+First Version with the following features:
+Matterhorn servers can be selected in the config dialog
+Videos in the selected Matterhorn server can be searched.
+Simple videos and multi-stream videos can be played when connected to the internet. Be aware that this might cause much traffic on 3G connections.
+
+Permissions:
+THIS APPLICATION HAS ACCESS TO THE FOLLOWING:
+NETWORK COMMUNICATION
+FULL INTERNET ACCESS
+Allows an application to create network sockets.
+PHONE CALLS
+READ PHONE STATE AND IDENTITY
+Allows the application to access the phone features of the device. An application with this permission can determine the phone number and serial number of this phone, whether a call is active, the number that call is connected to and the like.
+STORAGE
+MODIFY/DELETE USB STORAGE CONTENTS MODIFY/DELETE SD CARD CONTENTS
+Allows an application to write to the USB storage. Allows an application to write to the SD card.
+SYSTEM TOOLS
+DISABLE KEYLOCK
+Allows an application to disable the keylock and any associated password security. A legitimate example of this is the phone disabling the keylock when receiving an incoming phone call, then re-enabling the keylock when the call is finished.
+PREVENT DEVICE FROM SLEEPING
+Allows an application to prevent the device from going to sleep.
